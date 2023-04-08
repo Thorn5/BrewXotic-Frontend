@@ -1,3 +1,9 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
+  text-align: left;
 }
+
+.active {
+  background-color: deepskyblue;
+}
+
