@@ -1,11 +1,17 @@
-import './App.css';
-
+import "./App.css";
+import { Route, Routes, Switch, NavLink, Link } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-    <h3>Main Branch</h3>
-    <p>This app was created using a clean bootstrapped react template.</p>
-    <p>The stock react App.js code has been removed.</p>
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route index element={<ShopFront />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
+          <Route path="/ShoppingCart" element={<ShoppingCart />} />
+          <Route path="/CheckOut" element={<CheckOut />} />
+          <Route path="/Confirmation" element={<Confirmation />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
