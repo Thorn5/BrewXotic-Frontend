@@ -1,5 +1,5 @@
-import "./App.css";
 import React, { useState } from 'react';
+import "./App.css";
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -56,37 +56,7 @@ function App() {
         )}
       </main>
 
-      <style jsx>{`
-.App {
-display: flex;
-}
-
-nav {
-width: 200px;
-height: 100vh;
-background-color: #f0f0f0;
-}
-
-ul {
-list-style-type: none;
-margin: 0;
-padding: 0;
-}
-
-li {
-padding: 10px;
-cursor: pointer;
-}
-
-li.active {
-background-color: #ddd;
-}
-
-main {
-flex-grow: 1;
-padding: 20px;
-}
-`}</style>
+      <style>{` .App { display: flex; } nav { width: 200px; height: 100vh; background-color: #f0f0f0; } ul { list-style-type: none; margin: 0; padding: 0; } li { padding: 10px; cursor: pointer; } li.active { background-color: #ddd; } main { flex-grow: 1; padding: 20px; } `}</style>
     </div>
   );
 }
