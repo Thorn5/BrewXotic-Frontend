@@ -25,96 +25,94 @@ import "./App.css";
 
 // export default App;
 
-import React, { useState } from "react";
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+function Home() {
+return (
+<div>
+<h1>Home</h1>
+<p>Welcome to our website!</p>
+</div>
+);
+}
+
+function Products() {
+return (
+<div>
+<h1>Products</h1>
+<p>Check out our products!</p>
+</div>
+);
+}
+
+function About() {
+return (
+<div>
+<h1>About Us</h1>
+<p>Learn more about us!</p>
+</div>
+);
+}
 
 function App() {
-  const [activeTab, setActiveTab] = useState("home");
+return (
+<Router>
+<div className="App">
+<nav>
+<ul>
+<li>
+<Link to="/">Home</Link>
+</li>
+<li>
+<Link to="/products">Products</Link>
+</li>
+<li>
+<Link to="/about">About Us</Link>
+</li>
+</ul>
+</nav>
 
-  const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
-  };
+<main>
+<Route exact path="/" component={Home} />
+<Route path="/products" component={Products} />
+<Route path="/about" component={About} />
+</main>
 
-  return (
-    <div className="App">
-      <nav>
-        <ul>
-          <li
-            className={activeTab === "home" ? "active" : ""}
-            onClick={() => handleTabClick("home")}
-          >
-            Home
-          </li>
-          <li
-            className={activeTab === "products" ? "active" : ""}
-            onClick={() => handleTabClick("products")}
-          >
-            Products
-          </li>
-          <li
-            className={activeTab === "about" ? "active" : ""}
-            onClick={() => handleTabClick("about")}
-          >
-            About Us
-          </li>
-        </ul>
-      </nav>
+<style jsx>{`
+.App {
+display: flex;
+}
 
-      <main>
-        {activeTab === "home" && (
-          <div>
-            <h1>Home</h1>
-            <p>Welcome to our website!</p>
-          </div>
-        )}
+nav {
+width: 200px;
+height: 100vh;
+background-color: #f0f0f0;
+}
 
-        {activeTab === "products" && (
-          <div>
-            <h1>Products</h1>
-            <p>Check out our products!</p>
-          </div>
-        )}
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+}
 
-        {activeTab === "about" && (
-          <div>
-            <h1>About Us</h1>
-            <p>Learn more about us!</p>
-          </div>
-        )}
-      </main>
+li {
+padding: 10px;
+cursor: pointer;
+}
 
-      <style jsx>{`
-        .App {
-          display: flex;
-        }
+li.active {
+background-color: #ddd;
+}
 
-        nav {
-          width: 200px;
-          height: 100vh;
-          background-color: #f0f0f0;
-        }
-
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-        }
-
-        li {
-          padding: 10px;
-          cursor: pointer;
-        }
-
-        li.active {
-          background-color: #ddd;
-        }
-
-        main {
-          flex-grow: 1;
-          padding: 20px;
-        }
-      `}</style>
-    </div>
-  );
+main {
+flex-grow: 1;
+padding: 20px;
+}
+`}</style>
+</div>
+</Router>
+);
 }
 
 export default App;
