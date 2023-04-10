@@ -1,82 +1,59 @@
 import "./App.css";
-// import { Route, Routes, Switch, NavLink, Link } from "react-router-dom";
-// import Navbar from "./elements/Navbar";
-// import ShopFront from "./components/ShopFront"
-// import ProductDetail from "./components/ProductDetail"
-// import ShoppingCart from "./components/ShoppingCart"
-// import CheckOut from "./components/CheckOut"
-// import Confirmation from "./components/Confirmation"
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <Routes>
-//         <Route path="/" element={<Navbar />}>
-//           <Route index element={<ShopFront />} />
-//           <Route path="/ProductDetail" element={<ProductDetail />} />
-//           <Route path="/ShoppingCart" element={<ShoppingCart />} />
-//           <Route path="/CheckOut" element={<CheckOut />} />
-//           <Route path="/Confirmation" element={<Confirmation />} />
-//         </Route>
-//       </Routes>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
-function Home() {
-return (
-<div>
-<h1>Home</h1>
-<p>Welcome to our website!</p>
-</div>
-);
-}
-
-function Products() {
-return (
-<div>
-<h1>Products</h1>
-<p>Check out our products!</p>
-</div>
-);
-}
-
-function About() {
-return (
-<div>
-<h1>About Us</h1>
-<p>Learn more about us!</p>
-</div>
-);
-}
+import React, { useState } from 'react';
 
 function App() {
+const [activeTab, setActiveTab] = useState('home');
+
+const handleTabClick = (tabName) => {
+setActiveTab(tabName);
+};
+
 return (
-<Router>
 <div className="App">
 <nav>
 <ul>
-<li>
-<Link to="/">Home</Link>
+<li
+className={activeTab === 'home' ? 'active' : ''}
+onClick={() => handleTabClick('home')}
+>
+Home
 </li>
-<li>
-<Link to="/products">Products</Link>
+<li
+className={activeTab === 'products' ? 'active' : ''}
+onClick={() => handleTabClick('products')}
+>
+Products
 </li>
-<li>
-<Link to="/about">About Us</Link>
+<li
+className={activeTab === 'about' ? 'active' : ''}
+onClick={() => handleTabClick('about')}
+>
+About Us
 </li>
 </ul>
 </nav>
 
 <main>
-<Route exact path="/" component={Home} />
-<Route path="/products" component={Products} />
-<Route path="/about" component={About} />
+{activeTab === 'home' && (
+<div>
+<h1>Home</h1>
+<p>Welcome to our website!</p>
+</div>
+)}
+
+{activeTab === 'products' && (
+<div>
+<h1>Products</h1>
+<p>Check out our products!</p>
+</div>
+)}
+
+{activeTab === 'about' && (
+<div>
+<h1>About Us</h1>
+<p>Learn more about us!</p>
+</div>
+)}
 </main>
 
 <style jsx>{`
@@ -111,7 +88,6 @@ padding: 20px;
 }
 `}</style>
 </div>
-</Router>
 );
 }
 
