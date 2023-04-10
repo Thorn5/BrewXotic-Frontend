@@ -2,61 +2,61 @@ import "./App.css";
 import React, { useState } from 'react';
 
 function App() {
-const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('home');
 
-const handleTabClick = (tabName) => {
-setActiveTab(tabName);
-};
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+  };
 
-return (
-<div className="App">
-<nav>
-<ul>
-<li
-className={activeTab === 'home' ? 'active' : ''}
-onClick={() => handleTabClick('home')}
->
-Home
-</li>
-<li
-className={activeTab === 'products' ? 'active' : ''}
-onClick={() => handleTabClick('products')}
->
-Products
-</li>
-<li
-className={activeTab === 'about' ? 'active' : ''}
-onClick={() => handleTabClick('about')}
->
-About Us
-</li>
-</ul>
-</nav>
+  return (
+    <div className="App">
+      <nav>
+        <ul>
+          <li
+            className={activeTab === 'home' ? 'active' : ''}
+            onClick={() => handleTabClick('home')}
+          >
+            Home
+          </li>
+          <li
+            className={activeTab === 'products' ? 'active' : ''}
+            onClick={() => handleTabClick('products')}
+          >
+            Products
+          </li>
+          <li
+            className={activeTab === 'about' ? 'active' : ''}
+            onClick={() => handleTabClick('about')}
+          >
+            About Us
+          </li>
+        </ul>
+      </nav>
 
-<main>
-{activeTab === 'home' && (
-<div>
-<h1>Home</h1>
-<p>Welcome to our website!</p>
-</div>
-)}
+      <main>
+        {activeTab === 'home' && (
+          <div>
+            <h1>Home</h1>
+            <p>Welcome to our website!</p>
+          </div>
+        )}
 
-{activeTab === 'products' && (
-<div>
-<h1>Products</h1>
-<p>Check out our products!</p>
-</div>
-)}
+        {activeTab === 'products' && (
+          <div>
+            <h1>Products</h1>
+            <p>Check out our products!</p>
+          </div>
+        )}
 
-{activeTab === 'about' && (
-<div>
-<h1>About Us</h1>
-<p>Learn more about us!</p>
-</div>
-)}
-</main>
+        {activeTab === 'about' && (
+          <div>
+            <h1>About Us</h1>
+            <p>Learn more about us!</p>
+          </div>
+        )}
+      </main>
 
-<style jsx>{`
+      <style jsx>{`
 .App {
 display: flex;
 }
@@ -87,8 +87,8 @@ flex-grow: 1;
 padding: 20px;
 }
 `}</style>
-</div>
-);
+    </div>
+  );
 }
 
 export default App;
