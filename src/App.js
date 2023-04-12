@@ -1,26 +1,22 @@
 import "./App.css";
-import { Route, Routes, Switch, NavLink, Link } from "react-router-dom";
-import Navbar from "./elements/Navbar";
-import ShopFront from "./components/ShopFront"
-import ProductDetail from "./components/ProductDetail"
-import ShoppingCart from "./components/ShoppingCart"
-import CheckOut from "./components/CheckOut"
-import Confirmation from "./components/Confirmation"
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Route, Routes } from 'react-router-dom';
+import Grid from './components/Grid';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+      <Grid>
       <Routes>
-        <Route path="/" element={<Navbar />}>
-          <Route index element={<ShopFront />} />
-          <Route path="/ProductDetail" element={<ProductDetail />} />
-          <Route path="/ShoppingCart" element={<ShoppingCart />} />
-          <Route path="/CheckOut" element={<CheckOut />} />
-          <Route path="/Confirmation" element={<Confirmation />} />
-        </Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
-    </div>
+      </Grid>
   );
-}
+};
 
 export default App;
