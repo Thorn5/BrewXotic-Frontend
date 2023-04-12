@@ -1,7 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Grid from "./elements/Grid";
-// import Navbar from "./elements/Navbar";
 import ShopFront from "./components/ShopFront"
 import ProductDetail from "./components/ProductDetail"
 import ShoppingCart from "./components/ShoppingCart"
