@@ -29,7 +29,7 @@ const useAsyncAwait = (url) => {
 
   useEffect(() => {
     fetchData();
-  },   /*[]*/  );
+  },   []  );
 
   return { loading, error, apiData, moduleCalled };
 };
