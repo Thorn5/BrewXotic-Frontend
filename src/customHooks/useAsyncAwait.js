@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
 
-const apiKey = "12345";
-const requestParams = `?api_key=${apiKey}`;
-const baseUrl = "https://whatever";
-const requestEndpoint = "/end/point/"
-const url = `${baseUrl}${requestEndpoint}${requestParams}`;
-
 const useAsyncAwait = (url) => {
   if (typeof url !== "string" || url.length === 0) {
     throw new Error("Invalid URL");
