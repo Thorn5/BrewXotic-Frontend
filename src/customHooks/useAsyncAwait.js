@@ -7,6 +7,7 @@ const useAsyncAwait = (url) => {
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [apiData, setApiData] = useState(null);
+  const moduleCalled = "Data called from useAsyncAwait";
 
   const fetchData = async () => {
     setLoading(true);
@@ -30,7 +31,7 @@ const useAsyncAwait = (url) => {
     fetchData();
   }, []);
 
-  return { loading, error, apiData };
+  return { loading, error, apiData, moduleCalled };
 };
 
 export default useAsyncAwait;

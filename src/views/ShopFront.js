@@ -9,10 +9,10 @@ export default function ShopFront() {
   // const requestEndpoint = "/entries"
   // const url = `${baseUrl}${requestEndpoint}${requestParams}`;
   // const { loading, error, apiData } = useAsyncAwait(url);
-  const { loading, error, apiData } = mockApiData();
+  const { loading, error, apiData, moduleCalled } = mockApiData();
 
   return (<>
-    {loading ? (<p>Loading...</p>) : error ? (`${error}`) : (<div>{apiData && console.log({ apiData })} </div>)}
+    {loading ? (<p>Loading...</p>) : error ? (`${error}`) : (<div>{apiData && console.log({ apiData, moduleCalled })} </div>)}
     <div>ShopFront</div>
   </>)
 }
