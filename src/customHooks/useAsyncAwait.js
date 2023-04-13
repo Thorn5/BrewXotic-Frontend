@@ -7,7 +7,7 @@ const useAsyncAwait = (url) => {
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [apiData, setApiData] = useState(null);
-  const moduleCalled = "Data called from useAsyncAwait";
+  const moduleCalled = "Data fetched using useAsyncAwait";
 
   const fetchData = async () => {
     setLoading(true);
@@ -29,7 +29,7 @@ const useAsyncAwait = (url) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  },   /*[]*/  );
 
   return { loading, error, apiData, moduleCalled };
 };
