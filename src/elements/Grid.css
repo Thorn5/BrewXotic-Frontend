@@ -1,7 +1,7 @@
 .grid-container {
-    display: grid;
-    /* grid-template-columns: 200px 1fr; */
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    /* display: grid; */
+    display: flex;
+    grid-template-columns: 200px repeat( minmax(20rem, 1fr)); 
     grid-gap: 10px;
     height: 100vh;
   }
