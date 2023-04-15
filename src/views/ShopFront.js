@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-// import useAsyncAwait from '../customHooks/useAsyncAwait';
-import mockApiData from '../customHooks/useMockApiData';
+import React, { useContext, useState } from 'react';
+import {CartContext} from '../hooks/CartProvider'
+// import useAsyncAwait from '../hooks/useAsyncAwait';
+import mockApiData from '../hooks/useMockApiData';
 
 export default function ShopFront() {
   // const { loading, error, apiData, moduleCalled } = useAsyncAwait("http://localhost:5050/api/products");
   const { loading, error, apiData, moduleCalled } = mockApiData();
   const [selectedQty, setSelectedQty] = useState({});
   const [cart, setCart] = useState([]);
+  const {orderItems, setOrderItems} = useContext(CartContext);
+  console.log("orderItems Context: ", orderItems);
 
   const handleQtyChange = (e, id) => {
-    setSelectedQty({ ...selectedQty, [id]: +e.target.value });
+    setSelectedQty({ ...selectedQty, [id]: +e.target.value });  
   };
 
   const renderCards = () => {

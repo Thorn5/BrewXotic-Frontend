@@ -1,5 +1,6 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Grid from "./elements/Grid";
 import ShopFront from "./views/ShopFront";
 import ProductDetail from "./views/ProductDetail";
