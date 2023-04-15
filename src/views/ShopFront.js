@@ -19,8 +19,8 @@ export default function ShopFront() {
           key={item._id}
           id={item._id}
           style={{
-            width: "20rem",
-            margin: "1rem",
+            width: "28rem",
+            margin: "0.5rem",
             backgroundColor: "lightblue",
             borderRadius: "10px",
             boxShadow: "2px 2px 2px grey",
