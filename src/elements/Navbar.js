@@ -18,9 +18,6 @@ export default function Navbar() {
           <li className = "navitem">
             <NavLink to="/CheckOut"> CheckOut </NavLink>
           </li>
-          <li className = "navitem">
-            <NavLink to="/Confirmation"> Confirmation </NavLink>
-          </li>
         </ul>
       </nav>
       <Outlet />
