@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from './Navbar';
-import './Grid.css';
 
 const Grid = ({ children }) => {
   return (

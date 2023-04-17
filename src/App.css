@@ -1,19 +1,57 @@
 html {
-  font-size: 62.5%; 
+  font-size: 62.5%;
 }
 
 body {
-    font-size: 1.6em;
-    background-color: #e8f1b1;
-    
+  font-size: 1.6em;
+  background-color: #e8f1b1;
 }
 
 .App {
-  /* text-align: center; */
+  text-align: center;
+}
+
+.navlist {
+  padding: 1rem;
+}
+
+.navitem {
   text-align: left;
+  list-style-type: none;
 }
 
 .active {
   background-color: deepskyblue;
 }
 
+.grid-container {
+  display: flex;
+  grid-template-columns: 200px repeat(minmax(20rem, 1fr));
+  grid-gap: 10px;
+  height: 100vh;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.ShopFront {
+  text-align: left;
+  margin-left: 5.3rem;
+}
+
+label,
+button,
+select,
+summary,
+[type="radio"],
+[type="submit"],
+[type="checkbox"] {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

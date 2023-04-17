@@ -8,5 +8,14 @@ export default function useMockApiData() {
 
 }
 
-
-
+// Schema({
+//     _id: Schema.Types.ObjectId,
+//     name: String,
+//     description: String,
+//     images: {
+//         full_size: String,
+//         thumbnail: String
+//     },
+//     price: Schema.Types.Decimal128,
+//     quantity_available: Number
+// });

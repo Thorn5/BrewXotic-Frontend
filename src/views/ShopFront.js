@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import {CartContext} from '../hooks/CartProvider'
+import React, { useContext, useState, useEffect } from 'react';
+import { CartContext } from '../hooks/CartProvider'
 // import useAsyncAwait from '../hooks/useAsyncAwait';
 import mockApiData from '../hooks/useMockApiData';
 
@@ -8,11 +8,15 @@ export default function ShopFront() {
   const { loading, error, apiData, moduleCalled } = mockApiData();
   const [selectedQty, setSelectedQty] = useState({});
   const [cart, setCart] = useState([]);
-  const {orderItems, setOrderItems} = useContext(CartContext);
+  const { orderItems, setOrderItems } = useContext(CartContext); //! Remember to clear CartConext state in CartProvider.js!
   console.log("orderItems Context: ", orderItems);
 
   const handleQtyChange = (e, id) => {
-    setSelectedQty({ ...selectedQty, [id]: +e.target.value });  
+    const updatedQty = { ...selectedQty, [id]: +e.target.value };
+    setSelectedQty(updatedQty);
+    console.log(`Selected quantity for product ${id}:`, updatedQty[id]);
+    const cartItem = apiData.find(item => item._id === id);
+    console.log(cartItem);
   };
 
   const renderCards = () => {
@@ -20,6 +24,7 @@ export default function ShopFront() {
       return apiData.map(item => (
         <div
           key={item._id}
+          className="product_card"
           id={item._id}
           style={{
             width: "28rem",
@@ -40,6 +45,7 @@ export default function ShopFront() {
                 {num + 1}
               </option>
             ))}
+            console.log(selectedQty);
           </select>
           <button>Add to Cart</button>
           <p></p>
@@ -50,15 +56,15 @@ export default function ShopFront() {
 
   return (
     <div>
-      <div>ShopFront</div>
+      <div className='ShopFront'>ShopFront</div>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         `${error}`
       ) : (
-        <div>{apiData && console.log({ apiData, moduleCalled })}</div>
+        <div>{apiData && console.log({ moduleCalled, apiData })}</div>
       )}
-      <div  style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );
 }

@@ -5,20 +5,20 @@ export default function Navbar() {
   return (
     <div>
       <nav>
-        <ul>
-          <li>
+        <ul className = "navlist">
+          <li className = "navitem">
             <NavLink to="/"> ShopFront </NavLink>
           </li>
-          <li>
+          <li className = "navitem">
             <NavLink to="/ProductDetail"> ProductDetail </NavLink>
           </li>
-          <li>
+          <li className = "navitem">
             <NavLink to="/ShoppingCart"> ShoppingCart </NavLink>
           </li>
-          <li>
+          <li className = "navitem">
             <NavLink to="/CheckOut"> CheckOut </NavLink>
           </li>
-          <li>
+          <li className = "navitem">
             <NavLink to="/Confirmation"> Confirmation </NavLink>
           </li>
         </ul>

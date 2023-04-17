@@ -10,11 +10,12 @@ import Confirmation from "./views/Confirmation";
 import CartProvider from "./hooks/CartProvider";
 
 function App() {
+  //! Remember to clear CartConext state in CartProvider.js!
   return (
     <div className="App">
       <Grid>
         {/* Navbar.js incorporated in Grid */}
-        <CartProvider>
+        <CartProvider> 
           <Routes>
             <Route path="/" element={<ShopFront />} />
             <Route path="/ProductDetail" element={<ProductDetail />} />
