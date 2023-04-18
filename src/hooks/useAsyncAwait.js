@@ -36,6 +36,6 @@ const useAsyncAwait = (url) => {
 
 export default useAsyncAwait;
 
-// const { loading, error, apiData } = useAsyncAwait(url);
-// return (<>{loading ? (<p>Loading...</p>) : error ? (`${error}`) : (<div>{apiData && console.log({apiData})}</div>)}</>)
+// const { loading, error, apiData, moduleCalled } = useAsyncAwait(url);
+// return (<>{loading ? (<p>Loading...</p>) : error ? (`${error}`) : (<div>{apiData && console.log({moduleCalled, apiData})}</div>)}</>)
 // map: <ul>{path.map((item, index) => (<li key={index}>{item}</li>))}</ul>

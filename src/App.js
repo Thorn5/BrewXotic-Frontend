@@ -1,5 +1,5 @@
 import "./App.css";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; //todo ask Nuria about Route being needed but not called
 import { Route, Routes } from "react-router-dom";
 import Grid from "./elements/Grid";
 import ShopFront from "./views/ShopFront";
@@ -10,7 +10,6 @@ import Confirmation from "./views/Confirmation";
 import CartProvider from "./hooks/CartProvider";
 
 function App() {
-  //! Remember to clear CartConext state in CartProvider.js!
   return (
     <div className="App">
       <Grid>
