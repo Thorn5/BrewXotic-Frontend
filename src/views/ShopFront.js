@@ -7,13 +7,13 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../hooks/CartProvider";
-// import useAsyncAwait from '../hooks/useAsyncAwait';
-import mockApiData from "../hooks/useMockApiData";
+import useAsyncAwait from '../hooks/useAsyncAwait';
+// import mockApiData from "../hooks/useMockApiData";
 
 export default function ShopFront() {
   const customerId = "642df8cc72b64c7447006cb4";
-  // const { loading, error, apiData, moduleCalled } = useAsyncAwait("http://localhost:5050/api/products");
-  const { loading, error, apiData, moduleCalled } = mockApiData();
+  const { loading, error, apiData, moduleCalled } = useAsyncAwait("https://brewxotic-backend.onrender.com/api/products");
+//   const { loading, error, apiData, moduleCalled } = mockApiData();
   const [selectedQty, setSelectedQty] = useState({});
   const { orderItems, setOrderItems } = useContext(CartContext); //! Remember to clear CartConext state in CartProvider.js!
   // console.log("orderItems Context: ", orderItems);
