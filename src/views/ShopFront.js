@@ -12,13 +12,12 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
-import useAsyncAwait from '../hooks/useAsyncAwait';
-// import mockApiData from "../hooks/useMockApiData";
+// import useAsyncAwait from '../hooks/useAsyncAwait';
+import mockApiData from "../hooks/useMockApiData";
 
 export default function ShopFront() {
   // const { loading, error, apiData, moduleCalled } = useAsyncAwait("https://brewxotic-backend.onrender.com/api/products");
   const { loading, error, apiData, moduleCalled } = mockApiData();
-  const customerId = "642df8cc72b64c7447006cb4";
   const [selectedItems, setSelectedItems] = useState({});
   const [visState, setVisState] = useState("hidden");
   const { orderItems, setOrderItems } = useContext(CartContext);
