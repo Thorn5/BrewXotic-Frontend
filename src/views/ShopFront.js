@@ -1,52 +1,90 @@
-//todo identify when more than one item is selected
-//todo add "add all" card
-//todo zero all selection boxes when added
-//todo populate context
-//todo zero selection when added to card
-//todo resolve clashes
+// ! Why can't I zero the selection box!
+// * write new items to context
+// * Cart buttons revert
+// * add indicator to cart buttons
+// * move on
+// todo zero all selection boxes when added to context
+// todo zero selection when added to card
+// todo resolve clashes
+// todo populate shopping cart view
+// todo add purchase
+// todo move to convirmation view
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
 // import useAsyncAwait from '../hooks/useAsyncAwait';
 import mockApiData from "../hooks/useMockApiData";
 
 export default function ShopFront() {
-  const customerId = "642df8cc72b64c7447006cb4";
   // const { loading, error, apiData, moduleCalled } = useAsyncAwait("http://localhost:5050/api/products");
   const { loading, error, apiData, moduleCalled } = mockApiData();
-  const [selectedQty, setSelectedQty] = useState({});
-  const { orderItems, setOrderItems } = useContext(CartContext); //! Remember to clear CartConext state in CartProvider.js!
-  // console.log("orderItems Context: ", orderItems);
+  const customerId = "642df8cc72b64c7447006cb4";
+  const [selectedItems, setSelectedItems] = useState({});
+  const [visState, setVisState] = useState("hidden");
+  const { orderItems, setOrderItems } = useContext(CartContext);
 
   const handleQtyChange = (e, id) => {
-    const updatedQty = { ...selectedQty, [id]: +e.target.value };
-    if (updatedQty[id] === 0) {
-      delete updatedQty[id];
-    };
-    setSelectedQty(updatedQty);
-    const cartItem = apiData.find((item) => item._id === id); //pull object details from id. Testing use only.
-    console.clear();
-    console.log("%c++++++++++++ handleQtyChange ++++++++++++", 'color: #1cd945');
-    console.log(`Selected quantity for product ${id} - ${cartItem.name}: ${updatedQty[id]}`);
-    console.log("id: ",id);
-    console.log("cartItem: ", cartItem); //full product details
-    console.log("selectedQty, (previous value): ", selectedQty);
-    console.log("updatedQty, (current value): ", updatedQty);
-    console.log("%c++++++++++++ /handleQtyChange ++++++++++++", 'color: #1cd945');
+    const displayQuantity = e.target.value;
+    console.log(
+      "selectedItems ",
+      selectedItems,
+      /* "newSelectedItems ", newSelectedItems, */ "displayQuantity ",
+      displayQuantity
+    );
+    if (displayQuantity === 0) {
+      const { [id]: _, ...newSelectedItems } = selectedItems;
+      setSelectedItems(newSelectedItems);
+    } else {
+      setSelectedItems({ ...selectedItems, [id]: displayQuantity });
+    }
+    if (Object.keys(selectedItems).length > 1) {
+      // If more than one quantity selected, make bulk purchase button visible
+      setVisState("visible");
+    } else {
+      setVisState("hidden");
+    }
+    // Convert selectedItems quantity from string to number
+    for (let key in selectedItems) {
+      selectedItems[key] = parseInt(selectedItems[key]);
+      console.log("converted selectedItems: ", selectedItems);
+    }
   };
-  
+
   const handleCartClick = (e, id) => {
-    setOrderItems({
-      customer_id: customerId,
-      items: [{ product_id: id, quantity: selectedQty.quantity }],
-    });
-    // Deal with item repition
-    console.clear();
-    console.log("%c++++++++++++ handleCartClick ++++++++++++", 'color: #c75cd1');
-    console.log("orderItems: ", orderItems);
-    console.log("selectedQty: ", selectedQty);
-    console.log("%c++++++++++++ /handleCartClick ++++++++++++", 'color: #c75cd1');
+    const itemToPush = { product_id: id, quantity: selectedItems[id] };
+    if (itemToPush.quantity !== undefined) {
+      console.log("itemToPush.quantity is defined, processing push!");
+      if (orderItems.items.length > 0) {
+        console.log("orderItems.items.length > 0, applying filter");
+        const filteredItems = orderItems.items.filter(
+          (item) => item.product_id !== itemToPush.product_id
+        );
+        filteredItems.push(itemToPush);
+        const processedOrderItems = { ...orderItems, items: filteredItems };
+        setOrderItems(processedOrderItems);
+      } else {
+        console.log("orderItems.items.length = 0, no need to filter");
+        setOrderItems({ ...orderItems, items: [itemToPush] });
+      }
+    } else {
+      console.log("itemToPush.quantity selected... nothign to do");
+    }
+    // todo resetSelectionBox
   };
+
+  const handleAllToCartClick = (e, id) => { };
+  // const setCartButtonBadge = () => {
+  //   remove all badges
+  //   add badges from orderItems.items
+  // };
+
+  // useEffect(() => {
+  //   console.log(moduleCalled, apiData);
+  // }, []);
+
+  useEffect(() => {
+    console.log("orderItems: ", orderItems);
+  }, [orderItems]);
 
   const renderCards = () => {
     if (apiData) {
@@ -69,22 +107,27 @@ export default function ShopFront() {
           <h3>Price: €{item.price.$numberDecimal}</h3>
 
           <select
-            value={selectedQty[item._id] || 0}
+            id={`qty_${item._id}`}
+            value={selectedItems[item._id]}
             onChange={(e) => handleQtyChange(e, item._id)}
-          //   style={{
-          //   backgroundColor: selectedQty[item._id] ? 'white' : 'gainsboro',
-          //   color: selectedQty[item._id] ? 'black' : 'grey',
-          // }}
-
           >
             {[...Array(item.quantity_available + 1).keys()].map((num) => (
-              <option key={num} value={num}>{num}</option>
+              <option key={num} value={num}>
+                {num}
+              </option>
             ))}
           </select>
           <button onClick={(e) => handleCartClick(e, item._id)}>
             Add to Cart
           </button>
-          <p></p>
+          <p>
+            <button
+              style={{ visibility: visState }}
+              onClick={(e) => handleAllToCartClick(e, item._id)}
+            >
+              Add all selected items to Cart
+            </button>
+          </p>
         </div>
       ));
     }
@@ -93,15 +136,14 @@ export default function ShopFront() {
   return (
     <div>
       <div className="ShopFront">ShopFront</div>
-      {loading ? (
+      {/* {loading ? (
         <p>Loading...</p>
       ) : error ? (
         `${error}`
       ) : (
-        <div>{apiData && console.assert({ moduleCalled, apiData })}</div> //* changed .log to .assert to reduce annoyance.
-      )}
+        <div>{apiData && console.log(moduleCalled, apiData)}</div>
+      )} */}
       <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );
 }
-

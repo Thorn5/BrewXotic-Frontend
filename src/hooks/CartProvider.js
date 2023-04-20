@@ -3,28 +3,18 @@ import React, { createContext, useState } from "react";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  //! Remember to clear CartConext state in CartProvider.js!
-  const [orderItems, setOrderItems] = useState({
-    customer_id: { $oid: "64249af3f4df2cee8c0c2758" },
-    items: [
-      {
-        product_id: { $oid: "642dd56a163feb4a0795985a" },
-        quantity: { $numberInt: "48" },
-      },
-      {
-        product_id: { $oid: "642dd588163feb4a0795985b" },
-        quantity: { $numberInt: "12" },
-      },
-      {
-        product_id: { $oid: "642dd5e1163feb4a07959860" },
-        quantity: { $numberInt: "6" },
-      },
-      {
-        product_id: { $oid: "642dd622163feb4a07959864" },
-        quantity: { $numberInt: "2" },
-      },
-    ],
-  });
+  const [orderItems, setOrderItems] = useState(
+    {
+      "customer_id": "64249af3f4df2cee8c0c2758",
+      "items": [
+        // { "product_id": "642dd56a163feb4a0795985a", "quantity": 1 },
+        // { "product_id": "642dd588163feb4a0795985b", "quantity": 2 },
+        // { "product_id": "642dd594163feb4a0795985c", "quantity": 3 },
+        // { "product_id": "642dd5c3163feb4a0795985e", "quantity": 4 },
+        // { "product_id": "642dd5d3163feb4a0795985f", "quantity": 5 }
+      ]
+    }
+  );
 
   return (
     <CartContext.Provider value={{ orderItems, setOrderItems }}>
