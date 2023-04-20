@@ -3,10 +3,8 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Grid from "./elements/Grid";
 import ShopFront from "./views/ShopFront";
-import ProductDetail from "./views/ProductDetail";
 import ShoppingCart from "./views/ShoppingCart";
 import CheckOut from "./views/CheckOut";
-import Confirmation from "./views/Confirmation";
 import CartProvider from "./hooks/CartProvider";
 
 function App() {
@@ -17,10 +15,8 @@ function App() {
         <CartProvider> 
           <Routes>
             <Route path="/" element={<ShopFront />} />
-            <Route path="/ProductDetail" element={<ProductDetail />} />
             <Route path="/ShoppingCart" element={<ShoppingCart />} />
             <Route path="/CheckOut" element={<CheckOut />} />
-            <Route path="/Confirmation" element={<Confirmation />} />
           </Routes>
         </CartProvider>
       </Grid>

@@ -134,14 +134,7 @@ export default function ShopFront() {
 
   return (
     <div>
-      <div className="ShopFront">ShopFront</div>
-      {/* {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        `${error}`
-      ) : (
-        <div>{apiData && console.log(moduleCalled, apiData)}</div>
-      )} */}
+      <div className="ShopFront">BrewXotic ShopFront</div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );

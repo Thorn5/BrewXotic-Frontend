@@ -10,9 +10,6 @@ export default function Navbar() {
             <NavLink to="/"> ShopFront </NavLink>
           </li>
           <li className = "navitem">
-            <NavLink to="/ProductDetail"> ProductDetail </NavLink>
-          </li>
-          <li className = "navitem">
             <NavLink to="/ShoppingCart"> ShoppingCart </NavLink>
           </li>
           <li className = "navitem">
