@@ -1,4 +1,5 @@
 // ! Why can't I zero the selection box!
+// ! Add Try and catch to post
 // * write new items to context
 // * Cart buttons revert
 // * add indicator to cart buttons
