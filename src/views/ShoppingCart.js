@@ -45,16 +45,6 @@ export default function ShoppingCart() {
     }
   }, [productData]);
 
-  // useEffect(() => {
-  //   if (productData && productData.length) {
-  //     const prices = {};
-  // productData.forEach((product) => {
-  //   prices[product._id] = product.price;
-  // });
-  // setProductPrices(prices);
-  //   }
-  // }, [productData]);
-
   useEffect(() => {
     console.log("*+*+*+*+*+*+ useEffect check *+*+*+*+*+*+");
     console.log("customerData: ", customerData);
@@ -85,7 +75,8 @@ export default function ShoppingCart() {
                 <p>Would you like to purchase the items?</p>
                 <button>Purchase</button>
                 <button onClick={(e) => handleCancel(e)}>Cancel</button>
-              </>) : (<>Your Shopping cart is empty</>)}
+              </>
+              ) : (<>Your Shopping cart is empty</>)}
           </>
         )}
       </div>
