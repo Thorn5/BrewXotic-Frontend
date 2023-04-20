@@ -12,24 +12,18 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
-// import useAsyncAwait from '../hooks/useAsyncAwait';
-import mockApiData from "../hooks/useMockApiData";
+import useAsyncAwait from '../hooks/useAsyncAwait';
+// import mockApiData from "../hooks/useMockApiData";
 
 export default function ShopFront() {
-  // const { loading, error, apiData, moduleCalled } = useAsyncAwait("https://brewxotic-backend.onrender.com/api/products");
-  const { loading, error, apiData, moduleCalled } = mockApiData();
+  const { loading, error, apiData, moduleCalled } = useAsyncAwait("https://brewxotic-backend.onrender.com/api/products");
+  // const { loading, error, apiData, moduleCalled } = mockApiData();
   const [selectedItems, setSelectedItems] = useState({});
   const [visState, setVisState] = useState("hidden");
   const { orderItems, setOrderItems } = useContext(CartContext);
 
   const handleQtyChange = (e, id) => {
     const displayQuantity = e.target.value;
-    console.log(
-      "selectedItems ",
-      selectedItems,
-      /* "newSelectedItems ", newSelectedItems, */ "displayQuantity ",
-      displayQuantity
-    );
     if (displayQuantity === 0) {
       const { [id]: _, ...newSelectedItems } = selectedItems;
       setSelectedItems(newSelectedItems);

@@ -4,9 +4,9 @@ import { CartContext } from "../hooks/CartProvider";
 
 export default function ShoppingCart() {
   const { orderItems, setOrderItems } = useContext(CartContext);
-  const url1 =
-    "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
+  const url1 = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
   const url2 = "https://brewxotic-backend.onrender.com/api/products";
+
   const useCustomerAsyncAwait = () => {
     return useAsyncAwait(url1);
   };
@@ -25,6 +25,24 @@ export default function ShoppingCart() {
   } = useProductAsyncAwait();
   const [productNames, setProductNames] = useState({});
   // const [productPrices, setProductPrices] = useState({});
+
+  const handlePurchase = (e) => {
+    e.preventDefault();
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderItems),
+    };
+    const response = fetch("https://brewxotic-backend.onrender.com/api/orders", options);
+    if (response.ok) {
+      setOrderItems({
+        "customer_id": "64249af3f4df2cee8c0c2758",
+        "items": []});
+      alert("Order created successfully!");
+    } else {
+      alert("Error creating order");
+    }
+  };
 
   const handleCancel = (e) => {
     const emptyShoppingCart = {
@@ -45,13 +63,13 @@ export default function ShoppingCart() {
     }
   }, [productData]);
 
-  useEffect(() => {
-    console.log("*+*+*+*+*+*+ useEffect check *+*+*+*+*+*+");
-    console.log("customerData: ", customerData);
-    console.log("productData: ", productData);
-    console.log("orderItems: ", orderItems);
-    console.log("*+*+*+*+*+*+ /useEffect check/ *+*+*+*+*+*+");
-  }, [customerData, productData, orderItems]);
+  // useEffect(() => {
+  //   console.log("*+*+*+*+*+*+ useEffect check *+*+*+*+*+*+");
+  //   console.log("customerData: ", customerData);
+  //   console.log("productData: ", productData);
+  //   console.log("orderItems: ", orderItems);
+  //   console.log("*+*+*+*+*+*+ /useEffect check/ *+*+*+*+*+*+");
+  // }, [customerData, productData, orderItems]);
 
   return (
     <>
@@ -68,12 +86,12 @@ export default function ShoppingCart() {
               <>
                 <p>Your shopping cart has:</p>
                 {orderItems.items.map((item) => (
-                  <p>
+                  <p key={item.id}>
                     {item.quantity} x {productNames[item.product_id]}
                   </p>
                 ))}
                 <p>Would you like to purchase the items?</p>
-                <button>Purchase</button>
+                <button onClick={(e) => handlePurchase(e)}>Purchase</button>
                 <button onClick={(e) => handleCancel(e)}>Cancel</button>
               </>
               ) : (<>Your Shopping cart is empty</>)}
