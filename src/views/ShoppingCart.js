@@ -19,8 +19,8 @@ export default function ShoppingCart() {
     };
     try {
       const response = await fetch(
-        // "https://brewxotic-backend.onrender.com/api/orders",
-        "http://localhost:5050/api/orders",
+        "https://brewxotic-backend.onrender.com/api/orders",
+        // "http://localhost:5050/api/orders",
         options
       );
       if (response.ok) {
