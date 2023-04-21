@@ -20,6 +20,11 @@ body {
   list-style-type: none;
 }
 
+.cartitem {
+  text-align: left;
+  list-style-type: none;
+}
+
 .active {
   background-color: deepskyblue;
 }
@@ -33,6 +38,7 @@ body {
 
 .content {
   padding: 1rem;
+  width: 1fr;
 }
 
 .ShopFront {

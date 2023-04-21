@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
-// import useAsyncAwait from "../hooks/useAsyncAwait"
+import useAsyncAwait from "../hooks/useAsyncAwait"
 import useMockApiData from "../hooks/useMockApiData";
 
 
@@ -17,8 +17,8 @@ export default function ShopFront() {
   } = useMockApiData();
 
   // const productUrl = "https://brewxotic-backend.onrender.com/api/products";
-  // const customerUrl = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
   // const productUrl = "http://localhost:5050/api/products";
+  // const customerUrl = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
   // const customerUrl = "http://localhost:5050/api/customers/64249af3f4df2cee8c0c2758";
 
   // const { // * fetch product data
@@ -46,17 +46,18 @@ export default function ShopFront() {
   const handleQtyChange = (e, id) => { // * When a customer selects an item quantity
     const displayQuantity = e.target.value;
     console.log("displayQuantity:", displayQuantity);
-    if (displayQuantity === '0') { // * Remove selectedItems if qty = 0
+    if (displayQuantity === '0') { // * Remove from selectedItems if qty = 0
       const { [id]: _, ...newSelectedItems } = selectedItems;
       setSelectedItems(newSelectedItems);
-    } else { // * else add the item to the selectedItems array
+    } else { // * else add the item(s) to the selectedItems array
       setSelectedItems({ ...selectedItems, [id]: displayQuantity });
     }
-    if (Object.keys(selectedItems).length > 1) {// * If more than one item selected, make bulk purchase button visible
-      setVisState("visible");
-    } else {
-      setVisState("hidden");
-    }
+    // if (visState === "hidden" && Object.keys(selectedItems).length > 3) {// * If more than one item selected, make bulk purchase button visible
+    //   setVisState("visible");
+    // } 
+    // if (visState = "visible" && Object.keys(selectedItems).length < 2) {
+    //   setVisState("hidden");
+    // }
   };
 
   useEffect(() => { // * handleQtyChange diagnostics
@@ -154,6 +155,7 @@ export default function ShopFront() {
   return ( // * Display ShopFront page and render cards
     <div>
       <div className="ShopFront">BrewXotic ShopFront</div>
+      <div className="ShopFront">{`Greetings ${orderItems.first_name}`}</div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );
