@@ -1,29 +1,17 @@
-// ! Why can't I zero the selection box!
-// ! Add Try and catch to post
-// * write new items to context
-// * Cart buttons revert
-// * add indicator to cart buttons
-// * move on
-// todo zero all selection boxes when added to context
-// todo zero selection when added to card
-// todo resolve clashes
-// todo populate shopping cart view
-// todo add purchase
-// todo move to convirmation view
-
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
 import useAsyncAwait from '../hooks/useAsyncAwait';
 // import mockApiData from "../hooks/useMockApiData";
 
 export default function ShopFront() {
-  const { loading, error, apiData, moduleCalled } = useAsyncAwait("https://brewxotic-backend.onrender.com/api/products");
-  // const { loading, error, apiData, moduleCalled } = mockApiData();
   const [selectedItems, setSelectedItems] = useState({});
   const [visState, setVisState] = useState("hidden");
   const { orderItems, setOrderItems } = useContext(CartContext);
+  const url = "https://brewxotic-backend.onrender.com/api/products";
+  const { loading, error, apiData, moduleCalled } = useAsyncAwait(url);
+  // const { loading, error, apiData, moduleCalled } = mockApiData();
 
-  const handleQtyChange = (e, id) => {
+  const handleQtyChange = (e, id) => { // * When a customer selects an item quantity
     const displayQuantity = e.target.value;
     if (displayQuantity === 0) {
       const { [id]: _, ...newSelectedItems } = selectedItems;
@@ -44,7 +32,7 @@ export default function ShopFront() {
     }
   };
 
-  const handleCartClick = (e, id) => {
+  const handleCartClick = (e, id) => { // * When a customer clicks "Add to Cart"
     const itemToPush = { product_id: id, quantity: selectedItems[id] };
     if (itemToPush.quantity !== undefined) {
       console.log("itemToPush.quantity is defined, processing push!");
@@ -66,21 +54,25 @@ export default function ShopFront() {
     // todo resetSelectionBox
   };
 
-  const handleAllToCartClick = (e, id) => { };
-  // const setCartButtonBadge = () => {
-  //   remove all badges
-  //   add badges from orderItems.items
-  // };
+  const handleAllToCartClick = (e, id) => { // * When a customer clicks "Add all selected items to Cart"
+  };
 
-  // useEffect(() => {
-  //   console.log(moduleCalled, apiData);
-  // }, []);
-
-  useEffect(() => {
+  useEffect(() => { // * diagnostics
+    console.log("%c*+*+*+*+*+*+ ShopFront useEffect diagnostics *+*+*+*+*+*+", "color: #35e859");
+    console.log(moduleCalled, apiData);
     console.log("orderItems: ", orderItems);
-  }, [orderItems]);
+    console.log("%c*+*+*+*+*+*+ /ShopFront useEffect diagnostics/ *+*+*+*+*+*+", "color: #35e859");
+  }, [apiData, orderItems]);
 
-  const renderCards = () => {
+  if (loading) { // * Display loading notification
+    return("Page loading")
+  };
+  
+  if (error) { // * Display error notification
+    return ("Error while loading data!")
+  }
+
+  const renderCards = () => { // * Product card render template
     if (apiData) {
       return apiData.map((item) => (
         <div
@@ -126,11 +118,28 @@ export default function ShopFront() {
       ));
     }
   };
-
-  return (
-    <div>
+    
+  return ( // * Display ShopFront page and render cards
+  <div>
       <div className="ShopFront">BrewXotic ShopFront</div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );
 }
+
+// todo change data shape
+// * change schema
+// * change code
+// * check post
+// todo fix price display
+// ! Why can't I zero the selection box!
+// * write new items to context
+// * Cart buttons revert
+// * add indicator to cart buttons
+// * move on
+// todo zero all selection boxes when added to context
+// todo zero selection when added to card
+// todo resolve clashes
+// todo populate shopping cart view
+// todo add purchase
+// todo move to convirmation view

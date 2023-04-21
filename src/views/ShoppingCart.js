@@ -7,42 +7,35 @@ export default function ShoppingCart() {
   const url1 = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
   const url2 = "https://brewxotic-backend.onrender.com/api/products";
 
-  const useCustomerAsyncAwait = () => {
+  const useCustomerAsyncAwait = () => { // * fetch customer by id
     return useAsyncAwait(url1);
   };
-  const useProductAsyncAwait = () => {
+
+  const useProductAsyncAwait = () => { // * fetch products
     return useAsyncAwait(url2);
   };
-  const {
+
+  const { // * setup useCustomerAsyncAwait
     loading: customerLoading,
     error: customerError,
     apiData: customerData,
+    moduleCalled: customerModuleCalled,
   } = useCustomerAsyncAwait();
-  const {
+
+  const { // * setup useProductAsyncAwait
     loading: productLoading,
     error: productError,
     apiData: productData,
+    moduleCalled: productModuleCalled,
   } = useProductAsyncAwait();
-  const [productNames, setProductNames] = useState({});
-  // const [productPrices, setProductPrices] = useState({});
 
-  useEffect(() => {
-    if (productData && productData.length) {
-      const names = {};
-      productData.forEach((product) => {
-        names[product._id] = product.name;
-      });
-      setProductNames(names);
-    }
-  }, [productData]);
-
-  // useEffect(() => {
-  //   console.log("*+*+*+*+*+*+ useEffect check *+*+*+*+*+*+");
-  //   console.log("customerData: ", customerData);
-  //   console.log("productData: ", productData);
-  //   console.log("orderItems: ", orderItems);
-  //   console.log("*+*+*+*+*+*+ /useEffect check/ *+*+*+*+*+*+");
-  // }, [customerData, productData, orderItems]);
+  useEffect(() => { // * diagnostics
+    console.log("%c*+*+*+*+*+*+ ShoppingCart useEffect diagnostics *+*+*+*+*+*+", "color: #db7516");
+    console.log("Customer",customerModuleCalled, customerData);
+    console.log("Product",productModuleCalled, productData);
+    console.log("orderItems:", orderItems);
+    console.log("%c*+*+*+*+*+*+ /ShoppingCart useEffect diagnostics/ *+*+*+*+*+*+", "color: #db7516");
+  }, [customerData, productData, orderItems]);
 
   const handlePurchase = async (e) => {
     e.preventDefault();
@@ -65,46 +58,46 @@ export default function ShoppingCart() {
     } finally {
       console.log("Order created successfully!");
     }
+  }
 
-    const handleCancel = (e) => {
-      const emptyShoppingCart = {
-        customer_id: "64249af3f4df2cee8c0c2758",
-        items: [],
-      };
-
-      setOrderItems(emptyShoppingCart);
+  const handleCancel = (e) => {
+    const emptyShoppingCart = {
+      customer_id: "64249af3f4df2cee8c0c2758",
+      items: [],
     };
 
-    return (
-      <>
-        <div>ShoppingCart</div>
-        <div>
-          {customerLoading || productLoading ? (
-            <p>Loading...</p>
-          ) : customerError || productError ? (
-            `${customerError}${productError}`
-          ) : (
-            <>
-              <p>{customerData && `Hey there ${customerData.first_name}`}</p>
-              {orderItems && orderItems.items.length > 0 ? (
-                <>
-                  <p>Your shopping cart has:</p>
-                  {orderItems.items.map((item) => (
-                    <p key={item.id}>
-                      {item.quantity} x {productNames[item.product_id]}
-                    </p>
-                  ))}
-                  <p>Would you like to purchase the items?</p>
-                  <button onClick={(e) => handlePurchase(e)}>Purchase</button>
-                  <button onClick={(e) => handleCancel(e)}>Cancel</button>
-                </>
-              ) : (<>Your Shopping cart is empty</>)}
-            </>
-          )}
-        </div>
-      </>
-    );
-  }
+    setOrderItems(emptyShoppingCart);
+  };
+
+  return (
+    <>
+      <div>ShoppingCart</div>
+      <div>
+        {customerLoading || productLoading ? (
+          <p>Loading...</p>
+        ) : customerError || productError ? (
+          `${customerError}${productError}`
+        ) : (
+          <>
+            <p>{customerData && `Hey there ${customerData.first_name}`}</p>
+            {orderItems && orderItems.items.length > 0 ? (
+              <>
+                <p>Your shopping cart has:</p>
+                {orderItems.items.map((item) => (
+                  <p key={item.id}>
+                    {item.quantity} x {item.product_id}
+                  </p>
+                ))}
+                <p>Would you like to purchase the items?</p>
+                <button onClick={(e) => handlePurchase(e)}>Purchase</button>
+                <button onClick={(e) => handleCancel(e)}>Cancel</button>
+              </>
+            ) : (<>Your Shopping cart is empty</>)}
+          </>
+        )}
+      </div>
+    </>
+  );
 }
 
 //     const baseUrl = "https://whatever";
