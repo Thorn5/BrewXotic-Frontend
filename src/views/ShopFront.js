@@ -9,24 +9,24 @@ export default function ShopFront() {
   const [visState, setVisState] = useState("hidden");
   const { orderItems, setOrderItems } = useContext(CartContext);
 
-  const { // * fetch mock product data
-    loading: productLoading,
-    error: productError,
-    apiData: productData,
-    moduleCalled: productModuleCalled,
-  } = useMockApiData();
-
-  // const productUrl = "https://brewxotic-backend.onrender.com/api/products";
-  // const productUrl = "http://localhost:5050/api/products";
-  // const customerUrl = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
-  // const customerUrl = "http://localhost:5050/api/customers/64249af3f4df2cee8c0c2758";
-
-  // const { // * fetch product data
+  // const { // * fetch mock product data
   //   loading: productLoading,
   //   error: productError,
   //   apiData: productData,
   //   moduleCalled: productModuleCalled,
-  // } = useAsyncAwait(productUrl);
+  // } = useMockApiData();
+
+  const productUrl = "https://brewxotic-backend.onrender.com/api/products";
+  // const productUrl = "http://localhost:5050/api/products";
+  // const customerUrl = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
+  // const customerUrl = "http://localhost:5050/api/customers/64249af3f4df2cee8c0c2758";
+
+  const { // * fetch product data
+    loading: productLoading,
+    error: productError,
+    apiData: productData,
+    moduleCalled: productModuleCalled,
+  } = useAsyncAwait(productUrl);
 
   // const { // * fetch customer data
   //   loading: customerLoading,
