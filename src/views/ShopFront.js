@@ -1,55 +1,90 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
-import useAsyncAwait from '../hooks/useAsyncAwait';
-// import mockApiData from "../hooks/useMockApiData";
+// import useAsyncAwait from "../hooks/useAsyncAwait"
+import useMockApiData from "../hooks/useMockApiData";
+
 
 export default function ShopFront() {
   const [selectedItems, setSelectedItems] = useState({});
   const [visState, setVisState] = useState("hidden");
   const { orderItems, setOrderItems } = useContext(CartContext);
-  const url = "https://brewxotic-backend.onrender.com/api/products";
-  const { loading, error, apiData, moduleCalled } = useAsyncAwait(url);
-  // const { loading, error, apiData, moduleCalled } = mockApiData();
+
+  const { // * fetch mock product data
+    loading: productLoading,
+    error: productError,
+    apiData: productData,
+    moduleCalled: productModuleCalled,
+  } = useMockApiData();
+
+  // const productUrl = "https://brewxotic-backend.onrender.com/api/products";
+  // const customerUrl = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
+  // const productUrl = "http://localhost:5050/api/products";
+  // const customerUrl = "http://localhost:5050/api/customers/64249af3f4df2cee8c0c2758";
+
+  // const { // * fetch product data
+  //   loading: productLoading,
+  //   error: productError,
+  //   apiData: productData,
+  //   moduleCalled: productModuleCalled,
+  // } = useAsyncAwait(productUrl);
+
+  // const { // * fetch customer data
+  //   loading: customerLoading,
+  //   error: customerError,
+  //   apiData: customerData,
+  //   moduleCalled: customerModuleCalled,
+  // } = useAsyncAwait(customerUrl);
+
+  useEffect(() => { // * API diagnostics
+    console.log("%c*+*+*+*+*+*+ API useEffect diagnostics *+*+*+*+*+*+", "color: #35e859");
+    // console.log("Customer", customerModuleCalled, customerData);
+    console.log("Product", productModuleCalled, productData);
+    console.log("orderItems:", orderItems);
+    console.log("%c*+*+*+*+*+*+ /API useEffect diagnostics/ *+*+*+*+*+*+", "color: #35e859");
+  }, [ /* customerModuleCalled, */   /* customerData, */  productModuleCalled, productData, orderItems,]);
 
   const handleQtyChange = (e, id) => { // * When a customer selects an item quantity
     const displayQuantity = e.target.value;
-    if (displayQuantity === 0) {
+    console.log("displayQuantity:", displayQuantity);
+    if (displayQuantity === '0') { // * Remove selectedItems if qty = 0
       const { [id]: _, ...newSelectedItems } = selectedItems;
       setSelectedItems(newSelectedItems);
-    } else {
+    } else { // * else add the item to the selectedItems array
       setSelectedItems({ ...selectedItems, [id]: displayQuantity });
     }
-    if (Object.keys(selectedItems).length > 1) {
-      // If more than one quantity selected, make bulk purchase button visible
+    if (Object.keys(selectedItems).length > 1) {// * If more than one item selected, make bulk purchase button visible
       setVisState("visible");
     } else {
       setVisState("hidden");
     }
-    // Convert selectedItems quantity from string to number
-    for (let key in selectedItems) {
-      selectedItems[key] = parseInt(selectedItems[key]);
-      console.log("converted selectedItems: ", selectedItems);
-    }
   };
 
+  useEffect(() => { // * handleQtyChange diagnostics
+    console.log("%c*+*+*+*+*+*+ handleQtyChange useEffect diagnostics *+*+*+*+*+*+", "color: #21b0db");
+    console.log("selectedItems:", selectedItems);
+    console.log("Object.keys(selectedItems).length:", Object.keys(selectedItems).length);
+    console.log("%c*+*+*+*+*+*+ /handleQtyChange useEffect diagnostics/ *+*+*+*+*+*+", "color: #21b0db");
+  }, [selectedItems]);
+
   const handleCartClick = (e, id) => { // * When a customer clicks "Add to Cart"
-    const itemToPush = { product_id: id, quantity: selectedItems[id] };
+    const itemData = productData.find(product => product._id === id);
+    const itemToPush = { product_id: id, quantity: selectedItems[id], price: itemData.price.$numberDecimal, name: itemData.name };
     if (itemToPush.quantity !== undefined) {
       console.log("itemToPush.quantity is defined, processing push!");
-      if (orderItems.items.length > 0) {
+      if (itemToPush.quantity > 0 && orderItems.items.length > 0) {
         console.log("orderItems.items.length > 0, applying filter");
-        const filteredItems = orderItems.items.filter(
-          (item) => item.product_id !== itemToPush.product_id
-        );
+        const filteredItems = orderItems.items.filter((item) => item.product_id !== id);
         filteredItems.push(itemToPush);
         const processedOrderItems = { ...orderItems, items: filteredItems };
         setOrderItems(processedOrderItems);
-      } else {
-        console.log("orderItems.items.length = 0, no need to filter");
+      } if (orderItems.items.length === 0) {
+        console.log("current orderItems.items.length = 0, no need to filter");
         setOrderItems({ ...orderItems, items: [itemToPush] });
       }
     } else {
-      console.log("itemToPush.quantity selected... nothign to do");
+      console.log("itemToPush.quantity undefined, assuming zero, removing item from cart");
+      const filteredItems = orderItems.items.filter(item => item.product_id !== id);
+      setOrderItems(prevState => ({ ...prevState, items: filteredItems }));
     }
     // todo resetSelectionBox
   };
@@ -57,24 +92,9 @@ export default function ShopFront() {
   const handleAllToCartClick = (e, id) => { // * When a customer clicks "Add all selected items to Cart"
   };
 
-  useEffect(() => { // * diagnostics
-    console.log("%c*+*+*+*+*+*+ ShopFront useEffect diagnostics *+*+*+*+*+*+", "color: #35e859");
-    console.log(moduleCalled, apiData);
-    console.log("orderItems: ", orderItems);
-    console.log("%c*+*+*+*+*+*+ /ShopFront useEffect diagnostics/ *+*+*+*+*+*+", "color: #35e859");
-  }, [apiData, orderItems]);
-
-  if (loading) { // * Display loading notification
-    return("Page loading")
-  };
-  
-  if (error) { // * Display error notification
-    return ("Error while loading data!")
-  }
-
   const renderCards = () => { // * Product card render template
-    if (apiData) {
-      return apiData.map((item) => (
+    if (productData) {
+      return productData.map((item) => (
         <div
           key={item._id}
           className="product_card"
@@ -118,28 +138,23 @@ export default function ShopFront() {
       ));
     }
   };
-    
+
+  if ( // * Show Loading
+    // customerLoading || 
+    productLoading) {
+    return "Page loading";
+  };
+
+  if ( // * Display error
+    // customerError || 
+    productError) {
+    return "Error while loading data!";
+  };
+
   return ( // * Display ShopFront page and render cards
-  <div>
+    <div>
       <div className="ShopFront">BrewXotic ShopFront</div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );
 }
-
-// todo change data shape
-// * change schema
-// * change code
-// * check post
-// todo fix price display
-// ! Why can't I zero the selection box!
-// * write new items to context
-// * Cart buttons revert
-// * add indicator to cart buttons
-// * move on
-// todo zero all selection boxes when added to context
-// todo zero selection when added to card
-// todo resolve clashes
-// todo populate shopping cart view
-// todo add purchase
-// todo move to convirmation view
