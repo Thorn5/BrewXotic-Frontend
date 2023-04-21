@@ -58,18 +58,24 @@ export default function ShopFront() {
     // if (visState = "visible" && Object.keys(selectedItems).length < 2) {
     //   setVisState("hidden");
     // }
+    if (Object.keys(selectedItems).length > 0) {
+      setVisState("visible");
+    } else {
+      setVisState("hidden");
+    }
   };
 
   useEffect(() => { // * handleQtyChange diagnostics
     console.log("%c*+*+*+*+*+*+ handleQtyChange useEffect diagnostics *+*+*+*+*+*+", "color: #21b0db");
     console.log("selectedItems:", selectedItems);
     console.log("Object.keys(selectedItems).length:", Object.keys(selectedItems).length);
+    console.log("visState:", visState);
     console.log("%c*+*+*+*+*+*+ /handleQtyChange useEffect diagnostics/ *+*+*+*+*+*+", "color: #21b0db");
-  }, [selectedItems]);
+  }, [selectedItems, visState]);
 
   const handleCartClick = (e, id) => { // * When a customer clicks "Add to Cart"
     const itemData = productData.find(product => product._id === id);
-    const itemToPush = { product_id: id, quantity: selectedItems[id], price: itemData.price.$numberDecimal, name: itemData.name };
+    const itemToPush = { product_id: id, quantity: selectedItems[id], price: itemData.price, name: itemData.name };
     if (itemToPush.quantity !== undefined) {
       console.log("itemToPush.quantity is defined, processing push!");
       if (itemToPush.quantity > 0 && orderItems.items.length > 0) {
@@ -111,7 +117,7 @@ export default function ShopFront() {
         >
           <h3>{item.name}</h3>
           <img src={item.images.thumbnail} alt={item.name} />
-          <h3>Price: €{item.price.$numberDecimal}</h3>
+          `<h3>Price: €${item.price.toFixed(2)}</h3>`
 
           <select
             id={`qty_${item._id}`}

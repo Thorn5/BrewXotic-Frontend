@@ -62,11 +62,11 @@ export default function ShoppingCart() {
           {orderItems && orderItems.items.length > 0 ? (
             <>
               <ol>Your shopping cart has:
-              {orderItems.items.map((item, index) => (
-                <li key={index} className="cartitem">
-                  {item.quantity} x {item.name} @ €{item.price} - Subtotal = €{item.quantity * item.price}
-                </li>
-              ))}
+                {orderItems.items.map((item, index) => (
+                  <li key={index} className="cartitem">
+                    {item.quantity} x {item.name} @ €{item.price} - Subtotal = €{item.quantity * item.price}
+                  </li>
+                ))}
               </ol>
               <p>Total Price: €{totalPrice}</p>
               <p>Would you like to purchase the items?</p>
