@@ -6,8 +6,8 @@ import useMockApiData from "../hooks/useMockApiData";
 
 export default function ShopFront() {
   const [selectedItems, setSelectedItems] = useState({});
-  const [visState, setVisState] = useState("hidden");
   const { orderItems, setOrderItems } = useContext(CartContext);
+  let displayQuantity;
 
   // const { // * fetch mock product data
   //   loading: productLoading,
@@ -35,7 +35,7 @@ export default function ShopFront() {
   }, [ /* customerModuleCalled, */   /* customerData, */  productModuleCalled, productData, orderItems,]);
 
   const handleQtyChange = (e, id) => { // * When a customer selects an item quantity
-    const displayQuantity = e.target.value;
+    displayQuantity = e.target.value;
     console.log("displayQuantity:", displayQuantity);
     if (displayQuantity === '0') { // * Remove from selectedItems if qty = 0
       const { [id]: _, ...newSelectedItems } = selectedItems;
@@ -49,9 +49,8 @@ export default function ShopFront() {
     console.log("%c*+*+*+*+*+*+ handleQtyChange useEffect diagnostics *+*+*+*+*+*+", "color: #21b0db");
     console.log("selectedItems:", selectedItems);
     console.log("Object.keys(selectedItems).length:", Object.keys(selectedItems).length);
-    console.log("visState:", visState);
     console.log("%c*+*+*+*+*+*+ /handleQtyChange useEffect diagnostics/ *+*+*+*+*+*+", "color: #21b0db");
-  }, [selectedItems, visState]);
+  }, [selectedItems]);
 
   const handleCartClick = (e, id) => { // * When a customer clicks "Add to Cart"
     const itemData = productData.find(product => product._id === id);
@@ -112,9 +111,9 @@ export default function ShopFront() {
               </option>
             ))}
           </select>
-          <button onClick={(e) => handleCartClick(e, item._id)}>
+          {/* <button onClick={(e) => handleCartClick(e, item._id)}>
             Add to Cart
-          </button>
+          </button> */}
         </div>
       ));
     }
