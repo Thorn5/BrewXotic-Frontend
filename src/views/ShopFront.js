@@ -90,6 +90,7 @@ export default function ShopFront() {
           style={{
             width: "33rem",
             margin: "0.5rem",
+            paddingBottom: "3rem",
             backgroundColor: "lightblue",
             borderRadius: "10px",
             boxShadow: "2px 2px 2px grey",
@@ -114,13 +115,6 @@ export default function ShopFront() {
           <button onClick={(e) => handleCartClick(e, item._id)}>
             Add to Cart
           </button>
-          {/* <button onClick={(e) => handleCartClick(e, item._id)}>
-        Add to Cart{" "}
-        {orderItems.items.find((i) => i.product_id === item._id)?.quantity !==
-        undefined
-          ? `(${orderItems.items.find((i) => i.product_id === item._id)?.quantity})`
-          : ""}
-      </button> */}
         </div>
       ));
     }
