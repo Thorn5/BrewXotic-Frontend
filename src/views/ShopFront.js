@@ -96,7 +96,9 @@ export default function ShopFront() {
         >
           <h3>{item.name}</h3>
           <img src={item.images.thumbnail} alt={item.name} />
-          `<h3>Price: €${item.price.toFixed(2)}</h3>`
+          `<h3>Price: €{item.price.toFixed(2)} <span className="smallcarttext">
+              (x{orderItems.items.find((i) => i.product_id === item._id)?.quantity || 0})
+            </span></h3>`
           <select
             id={`qty_${item._id}`}
             value={selectedItems[item._id]}
@@ -111,9 +113,7 @@ export default function ShopFront() {
           <button
             id={`cart_${item._id}`}
             onClick={(e) => handleCartClick(e, item._id)}          >
-            Put in cart <span className="smallcarttext">
-              ({orderItems.items.find((i) => i.product_id === item._id)?.quantity || 0} in cart)
-            </span>
+            Add to cart
           </button>
         </div>
       ));
