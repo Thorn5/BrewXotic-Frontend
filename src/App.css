@@ -40,6 +40,11 @@ body {
   list-style-type: none;
 }
 
+.smallcarttext {
+  /* font-size: 11px; */
+  font-size: 80%;
+}
+
 .active {
   background-color: deepskyblue;
 }

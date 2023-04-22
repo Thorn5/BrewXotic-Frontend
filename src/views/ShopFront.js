@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { CartContext } from "../hooks/CartProvider";
 import useAsyncAwait from "../hooks/useAsyncAwait"
 import useMockApiData from "../hooks/useMockApiData";
@@ -7,7 +7,6 @@ import useMockApiData from "../hooks/useMockApiData";
 export default function ShopFront() {
   const [selectedItems, setSelectedItems] = useState({});
   const { orderItems, setOrderItems } = useContext(CartContext);
-  let displayQuantity;
 
   // const { // * fetch mock product data
   //   loading: productLoading,
@@ -35,7 +34,7 @@ export default function ShopFront() {
   }, [ /* customerModuleCalled, */   /* customerData, */  productModuleCalled, productData, orderItems,]);
 
   const handleQtyChange = (e, id) => { // * When a customer selects an item quantity
-    displayQuantity = e.target.value;
+    const displayQuantity = e.target.value;
     console.log("displayQuantity:", displayQuantity);
     if (displayQuantity === '0') { // * Remove from selectedItems if qty = 0
       const { [id]: _, ...newSelectedItems } = selectedItems;
@@ -67,12 +66,11 @@ export default function ShopFront() {
         console.log("current orderItems.items.length = 0, no need to filter");
         setOrderItems({ ...orderItems, items: [itemToPush] });
       }
-    } else {
-      console.log("itemToPush.quantity undefined, assuming zero, removing item from cart");
+    } if (itemToPush.quantity === 0) {
+      console.log("itemToPush.quantity zero, removing item from cart");
       const filteredItems = orderItems.items.filter(item => item.product_id !== id);
       setOrderItems(prevState => ({ ...prevState, items: filteredItems }));
     }
-    // resetSelectionBox
     setSelectedItems(prevState => ({
       ...prevState,
       [id]: 0
@@ -99,7 +97,6 @@ export default function ShopFront() {
           <h3>{item.name}</h3>
           <img src={item.images.thumbnail} alt={item.name} />
           `<h3>Price: €${item.price.toFixed(2)}</h3>`
-
           <select
             id={`qty_${item._id}`}
             value={selectedItems[item._id]}
@@ -111,9 +108,13 @@ export default function ShopFront() {
               </option>
             ))}
           </select>
-          {/* <button onClick={(e) => handleCartClick(e, item._id)}>
-            Add to Cart
-          </button> */}
+          <button
+            id={`cart_${item._id}`}
+            onClick={(e) => handleCartClick(e, item._id)}          >
+            Put in cart <span className="smallcarttext">
+              ({orderItems.items.find((i) => i.product_id === item._id)?.quantity || 0} in cart)
+            </span>
+          </button>
         </div>
       ));
     }
