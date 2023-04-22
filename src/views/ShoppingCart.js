@@ -74,7 +74,10 @@ export default function ShoppingCart() {
               <button onClick={(e) => handleCancel(e)}>Cancel</button>
             </>
           ) : (
-            <>Your Shopping cart is empty! Why not go back to the shop?</>
+            // <>Your Shopping cart is empty! Why not go back to the shop?</>
+            <p>
+              Your Shopping cart is empty! Why not <a href={"https://brewxotic-frontend.onrender.com/"}>go back to the shop</a>?
+            </p>
           )}
         </div>
       </div>
