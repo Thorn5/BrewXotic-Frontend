@@ -41,8 +41,7 @@ body {
 }
 
 .smallcarttext {
-  /* font-size: 11px; */
-  font-size: 80%;
+  font-size: 75%;
 }
 
 .active {

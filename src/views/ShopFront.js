@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../hooks/CartProvider";
 import useAsyncAwait from "../hooks/useAsyncAwait"
-import useMockApiData from "../hooks/useMockApiData";
+// import useMockApiData from "../hooks/useMockApiData";
 
 
 export default function ShopFront() {
