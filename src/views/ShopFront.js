@@ -16,10 +16,8 @@ export default function ShopFront() {
   //   moduleCalled: productModuleCalled,
   // } = useMockApiData();
 
+  // const productUrl = process.env.PRODUCT_ENDPOINT;
   const productUrl = "https://brewxotic-backend.onrender.com/api/products";
-  // const productUrl = "http://localhost:5050/api/products";
-  // const customerUrl = "https://brewxotic-backend.onrender.com/api/customers/64249af3f4df2cee8c0c2758";
-  // const customerUrl = "http://localhost:5050/api/customers/64249af3f4df2cee8c0c2758";
 
   const { // * fetch product data
     loading: productLoading,
@@ -27,13 +25,6 @@ export default function ShopFront() {
     apiData: productData,
     moduleCalled: productModuleCalled,
   } = useAsyncAwait(productUrl);
-
-  // const { // * fetch customer data
-  //   loading: customerLoading,
-  //   error: customerError,
-  //   apiData: customerData,
-  //   moduleCalled: customerModuleCalled,
-  // } = useAsyncAwait(customerUrl);
 
   useEffect(() => { // * API diagnostics
     console.log("%c*+*+*+*+*+*+ API useEffect diagnostics *+*+*+*+*+*+", "color: #35e859");
@@ -51,17 +42,6 @@ export default function ShopFront() {
       setSelectedItems(newSelectedItems);
     } else { // * else add the item(s) to the selectedItems array
       setSelectedItems({ ...selectedItems, [id]: displayQuantity });
-    }
-    // if (visState === "hidden" && Object.keys(selectedItems).length > 3) {// * If more than one item selected, make bulk purchase button visible
-    //   setVisState("visible");
-    // } 
-    // if (visState = "visible" && Object.keys(selectedItems).length < 2) {
-    //   setVisState("hidden");
-    // }
-    if (Object.keys(selectedItems).length > 0) {
-      setVisState("visible");
-    } else {
-      setVisState("hidden");
     }
   };
 
@@ -93,10 +73,11 @@ export default function ShopFront() {
       const filteredItems = orderItems.items.filter(item => item.product_id !== id);
       setOrderItems(prevState => ({ ...prevState, items: filteredItems }));
     }
-    // todo resetSelectionBox
-  };
-
-  const handleAllToCartClick = (e, id) => { // * When a customer clicks "Add all selected items to Cart"
+    // resetSelectionBox
+    setSelectedItems(prevState => ({
+      ...prevState,
+      [id]: 0
+    }))
   };
 
   const renderCards = () => { // * Product card render template
@@ -133,14 +114,13 @@ export default function ShopFront() {
           <button onClick={(e) => handleCartClick(e, item._id)}>
             Add to Cart
           </button>
-          <p>
-            <button
-              style={{ visibility: visState }}
-              onClick={(e) => handleAllToCartClick(e, item._id)}
-            >
-              Add all selected items to Cart
-            </button>
-          </p>
+          {/* <button onClick={(e) => handleCartClick(e, item._id)}>
+        Add to Cart{" "}
+        {orderItems.items.find((i) => i.product_id === item._id)?.quantity !==
+        undefined
+          ? `(${orderItems.items.find((i) => i.product_id === item._id)?.quantity})`
+          : ""}
+      </button> */}
         </div>
       ));
     }
@@ -160,8 +140,7 @@ export default function ShopFront() {
 
   return ( // * Display ShopFront page and render cards
     <div>
-      <div className="ShopFront">BrewXotic ShopFront</div>
-      <div className="ShopFront">{`Greetings ${orderItems.first_name}`}</div>
+      <div className="ShopFront">BrewXotic ShopFront - {`Greetings ${orderItems.first_name}`}</div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>{renderCards()}</div>
     </div>
   );

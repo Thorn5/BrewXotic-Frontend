@@ -20,8 +20,12 @@ body {
   list-style-type: none;
 }
 
+.cartlist {
+  padding: 1rem;
+}
+
 .cartitem {
-  text-align: left;
+  /* text-align: left; */
   list-style-type: none;
 }
 
@@ -43,7 +47,7 @@ body {
 
 .ShopFront {
   text-align: left;
-  margin-left: 5.3rem;
+  margin-left: 3rem;
 }
 
 label,

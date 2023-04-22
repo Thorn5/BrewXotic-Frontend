@@ -61,20 +61,20 @@ export default function ShoppingCart() {
         <div>
           {orderItems && orderItems.items.length > 0 ? (
             <>
-              <ol>Your shopping cart has:
+              <ol className="cartlist">Your shopping cart has:
                 {orderItems.items.map((item, index) => (
                   <li key={index} className="cartitem">
-                    {item.quantity} x {item.name} @ €{item.price} - Subtotal = €{item.quantity * item.price}
+                    {item.quantity} x {item.name} @ €${item.price.toFixed(2)} | Subtotal = €${(item.quantity * item.price).toFixed(2)}
                   </li>
                 ))}
               </ol>
-              <p>Total Price: €{totalPrice}</p>
+              <p>Total Price: €${totalPrice.toFixed(2)}</p>
               <p>Would you like to purchase the items?</p>
               <button onClick={(e) => handlePurchase(e)}>Purchase</button>
               <button onClick={(e) => handleCancel(e)}>Cancel</button>
             </>
           ) : (
-            <>Your Shopping cart is empty</>
+            <>Your Shopping cart is empty! Why not go back to the shop?</>
           )}
         </div>
       </div>
